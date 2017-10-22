@@ -1,10 +1,41 @@
 # IoT-Python
-To give you an idea of what we're looking for in a README, here are some particularly good README's which were submitted for homework 5. In general, characteristics of a good README included:
 
-Brief or no discussion of concepts which were stated in lecture (eg, how an AVL tree does its rotations)
-Succinct discussion of important design issues that were faced, the solution that was decided upon, as well as the rationale behind the decision.
-For the Shakespeare/Bacon or extra credit analyses, it was important to state:
-the problem/question they were answering,
-any relevant data that they collected,
-an answer to the stated question, which is justified by the collected data.
-Note that length of the README, or graphics, did not determine the quality of a README -- the most important characteristic was that all conclusions were justified.
+ README for homework 5.
+
+Prerequisites
+
+* A WeMos Lolin32 microcontroller with at least one color led
+* picocom sudo apt-get install picocom. On OS X you need Homebrew to install picocom by: brew install picocom)
+* wget sudo apt-get install wget. On OS X brew install wget
+* Silabs VCP driver for OS X
+* esptool pip install esptool
+* Adafruit-ampy pip install adafruit-ampy
+
+How to use
+
+Flashing MicroPython
+
+Install MicroPython:
+
+wget http://micropython.org/resources/firmware/esp32-20171017-v1.9.2-279-g090b6b80.bin
+esptool.py -p /dev/ttyUSB0 -b 460800 erase_flash
+esptool.py -p /dev/ttyUSB0 -b 460800 write_flash --flash_mode dio 0x1000 esp32-*.bin
+Note that in OS X the ttyUSB0 is replaced with tty.SLAB_USBtoUART. This applies for entire project!
+
+Get the microcontroller ready
+
+Upload files to ESP32:
+
+ampy -p /dev/ttyUSB0 put boot.py
+ampy -p /dev/ttyUSB0 put main.py
+Run it
+
+Connect through picocom:
+
+picocom -b115200 /dev/ttyUSB0
+Run the code:
+
+main()
+Enter the shown ip into the browser and start blinking.
+
+
