@@ -20,7 +20,16 @@ Content-Type: text/html
   </body>
 </html>
 """
+def toggle_red():
+    led_RED.value(1 - led_RED.value())
 
+def toggle_green():
+    led_GREEN.value(1 - led_GREEN.value())
+
+def toggle_blue():
+    led_BLUE.value(1 - led_BLUE.value())
+
+    
 def main():
     s = socket.socket()
     ai = socket.getaddrinfo("10.59.1.166", 8080)
@@ -31,7 +40,7 @@ def main():
     s.bind(addr)
     s.listen(5)
     print("Listening, connect your browser to http://10.59.1.166:8080/")
-
+       
     counter = 0
     while True:
         sock, addr = s.accept()
@@ -40,8 +49,14 @@ def main():
         req = stream.readline().decode("ascii")
         method, path, protocol = req.split(" ")
         print("Got", method, "request for", path)
-        if path == "/toggle":
-            led_pin.value(1-led_pin.value())
+        
+         if path == "/toggle_red": #if path == to red, it runs red
+            toggle_red()
+        elif path == "/toggle_green": #if path == to green, it runs green
+            toggle_green()
+        elif path == "/toggle_blue": #if path == to blue, it runs blue
+            toggle_blue()
+
         while True:
             h = stream.readline().decode("ascii").strip()
             if h == "":
@@ -52,5 +67,3 @@ def main():
         sock.close()
         counter += 1
         print()
-
-main()
